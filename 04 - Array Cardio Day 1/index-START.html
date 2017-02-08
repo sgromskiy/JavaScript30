@@ -31,29 +31,62 @@
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    let filtered = inventors.filter((person) => (person.year >= 1500 && person.year < 1600));
+    console.table(filtered);
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
+    let names = inventors.map(person => person.first + " " + person.last);
+    console.log(names);
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    let sorted = inventors.sort((a, b) => (a.year > b.year) ? 1: -1);
+    console.table(sorted);
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
+    let summ = inventors.reduce((total, current) => {
+      return total + (current.passed - current.year);
+    }, 0);
+    console.log(summ)
 
     // 5. Sort the inventors by years lived
-
+      let sorted2 = inventors.sort((a, b) => {
+        return ((a.passed - a.year) > (b.passed - b.year)) ? 1 : -1;
+      });
+      console.table(sorted2);
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+    
+    //let links = [ ...document.querySelectorAll('.mw-category a')];
+    //let linksDe = links
+    //  .map(item => item.innerText)
+    //  .filter(item => item.includes(' de '));
+    //console.dir(linksDe);
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    let sortedPeople = people.sort(function(a, b) {
+      let [aLastName, aFirstName] = a.split(', ');
+      let [bLastName, bFirstName] = b.split(', ');
+      return (aLastName > bLastName) ? 1 : -1;
+    });
+    console.dir(sortedPeople);
+
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
-
+    var result = data.reduce((obj, item) => {
+      if (obj[item]){
+        obj[item] += 1;
+      } else {
+        obj[item] = 1;
+      }
+      return obj
+    }, {});
+    console.dir(result);
   </script>
 </body>
 </html>
