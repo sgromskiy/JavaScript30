@@ -15,8 +15,40 @@
     </ul>
   </form>
 <script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+  //http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+  //data source
+  const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
+  fetch(endpoint)
+    .then(response => response.json())
+    .then(json => typeAhead(json))
+
+  function typeAhead(data){
+    const input = document.querySelector('.search');
+    const resultList = document.querySelector('.suggestions');
+
+    function filterList(){
+      let val = this.value;
+      let rx = new RegExp(val, 'gi');
+      resultList.innerHTML = data.reduce((list, item) =>{
+        if(item.city.match(rx) || item.state.match(rx)) {
+          let nCity = item.city.replace(rx, `<span class="hl">${val}</span>`);
+          let nState = item.state.replace(rx, `<span class="hl">${val}</span>`);
+          list += `<li>
+            <span class="nam">${nCity}, ${nState}</span>
+            <span class="populatio">${numberWithCommas(item.population)}</span>
+          </li>`;
+        }
+        return list;
+      }, '');
+    }
+
+    input.addEventListener('change', filterList);
+    input.addEventListener('keyup', filterList);
+  }
 </script>
   </body>
 </html>

@@ -24,6 +24,7 @@
     .panels {
       min-height:100vh;
       overflow: hidden;
+      display:flex;
     }
 
     .panel {
@@ -41,6 +42,9 @@
       font-size: 20px;
       background-size:cover;
       background-position:center;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
     }
 
 
@@ -54,8 +58,20 @@
       margin:0;
       width: 100%;
       transition:transform 0.5s;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-
+  .panel > p:first-child{
+    transform: translateY(-100%);
+  }
+  .panel > p:last-child{
+    transform: translateY(100%);
+  }
+  .open-active p{
+    transform: translateY(0) !important;
+  }
     .panel p {
       text-transform: uppercase;
       font-family: 'Amatic SC', cursive;
@@ -68,6 +84,7 @@
 
     .panel.open {
       font-size:40px;
+      flex-grow: 5;
     }
 
     .cta {
@@ -107,7 +124,30 @@
   </div>
 
   <script>
+(function(){
+  let panels = document.querySelectorAll('.panel');
+  let currentPanel; 
+  function togglePanel(){
+    currentPanel = this;
+    this.classList.add('open');
+    closeOtherPanels(this);
+  }
 
+  function togglePanelText(e){
+    if(e.propertyName == "flex-grow" && e.target == currentPanel) this.classList.add('open-active');
+  }
+
+  function closeOtherPanels(target){
+    panels.forEach(panel => {
+      if(panel !== target) panel.classList.remove('open', 'open-active');
+    });
+  }
+
+  panels.forEach(panel => {
+    panel.addEventListener('click', togglePanel);
+    panel.addEventListener('transitionend', togglePanelText);
+  });
+})();
   </script>
 
 
