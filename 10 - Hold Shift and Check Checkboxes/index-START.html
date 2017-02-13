@@ -104,6 +104,25 @@
   </div>
 
 <script>
+(function(){
+  let inputs = document.querySelectorAll('input');
+  let prevClick;
+  function clickHendler(e){
+    let range = false;
+    if(e.shiftKey && this.checked) {
+      inputs.forEach(input => {
+        if(input === this || input === prevClick) {
+          range = !range;
+        }
+        if(range) {
+          input.checked = true;
+        }
+      });
+    }
+    prevClick = this;
+  }
+  inputs.forEach(input => { input.addEventListener('click', clickHendler); });
+})();
 </script>
 </body>
 </html>
