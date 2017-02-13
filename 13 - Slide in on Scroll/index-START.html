@@ -64,8 +64,7 @@ const images = document.querySelectorAll('.slide-in');
 function checkSlide(e) {
   images.forEach(image => {
     let showWhenX = (window.scrollY + window.innerHeight) - image.height / 2 ;
-  });
-  let hideWhenX = image.offsetTop - image.height;
+    let hideWhenX = image.offsetTop - image.height;
   });
 }
 
