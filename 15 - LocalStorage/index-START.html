@@ -23,13 +23,69 @@
       <input type="text" name="item" placeholder="Item Name" required>
       <input type="submit" value="+ Add Item">
     </form>
+    <button class="reset">Check All</button>
   </div>
 
 <script>
+(function(){
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
-  const items = [];
+  const toggle = document.querySelector('.reset');
+  const items = JSON.parse(localStorage.getItem('items')) || [];
+  let flag = true;
+  console.clear();
+  console.table(items);
+  drowList();
 
+
+  function addItemFunc(e) {
+    e.preventDefault();
+    const name = this.querySelector('[type="text"]').value;
+    const item = {
+      text: name,
+      status: false
+    }
+    items.push(item);
+    localStorage.setItem('items', JSON.stringify(items));
+    this.reset();
+    drowList();
+    console.clear();
+    console.table(items);
+  }
+
+  function drowList() {
+    itemsList.innerHTML = items.map((item, ind) => {
+      return `<li>
+                <input id=item${ind} data-index=${ind} type='checkbox' ${(item.status) ? 'checked' : ''}>
+                <label for=item${ind}>${item.text}</label>
+              </li>`
+    }).join('');
+  }
+
+  function toogleState(e){
+    if(!e.target.matches('input')) return;
+    let i = e.target.dataset.index;
+    items[i].status =! items[i].status;
+    localStorage.setItem('items', JSON.stringify(items));
+    console.clear();
+    console.table(items);
+  }
+
+  function toogleAllState(){
+    items.forEach(item => item.status = flag);
+    localStorage.setItem('items', JSON.stringify(items));
+    drowList();
+    flag = !flag;
+    const text = (flag) ? 'Check All' : 'Uncheck All';
+    this.innerText = text;
+    console.clear();
+    console.table(items);
+  }
+
+  addItems.addEventListener('submit', addItemFunc);
+  itemsList.addEventListener('click', toogleState);
+  toggle.addEventListener('click', toogleAllState);
+})();
 </script>
 
 

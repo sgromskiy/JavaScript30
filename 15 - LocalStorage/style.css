@@ -55,17 +55,18 @@
     }
 
     .plates input {
-      display: none;
+      //display: none;
+      margin-right: 5px;
     }
 
-    .plates input + label:before {
+    /*.plates input + label:before {
       content: '⬜️';
       margin-right: 10px;
     }
 
     .plates input:checked + label:before {
       content: '🌮';
-    }
+    }*/
 
     .add-items {
       margin-top: 20px;
@@ -75,4 +76,15 @@
       padding:10px;
       outline:0;
       border:1px solid rgba(0,0,0,0.1);
+    }
+    .reset{
+      margin: 0 auto;
+      padding:10px;
+      border:1px solid rgba(0,0,0,0.1);
+      border-top: 0;
+      position: relative;
+      top: 56px;
+      background: rgba(255,255,255,0.95);
+      cursor: pointer;
+      outline: none;
     }
