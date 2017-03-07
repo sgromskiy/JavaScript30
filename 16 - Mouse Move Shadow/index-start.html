@@ -31,6 +31,26 @@
   </style>
 
 <script>
+(function(){
+  let hero = document.querySelector('.hero');
+  let text = hero.querySelector('h1');
+
+  function drowShadow(e){
+    let { offsetWidth: width, offsetHeight: height } = hero;
+    let { offsetX: x, offsetY: y } = e;
+    if(this !== e.target){
+      x = x + e.target.offsetLeft;
+      y = y + e.target.offsetTop;
+    }
+    let sizeX = (width / 2 - x) / 10;
+    let sizeY = (height / 2 - y) / 10;
+
+    text.style.textShadow = `${sizeX}px ${sizeY}px 0px rgba(0, 0, 0, 0.5), ${-sizeX}px ${-sizeY}px 0px rgba(200, 0, 0, 0.5)`;
+    
+  }
+
+  hero.addEventListener('mousemove', drowShadow);
+})();
 </script>
 </body>
 </html>
