@@ -182,6 +182,19 @@
     </li>
   </ul>
 <script>
+const vids = Array.from(document.querySelectorAll('[data-time]'));
+
+let seconds = vids.reduce((total, vid) => {
+  let [min, sec] = vid.dataset.time.split(':');
+  return total + (+min * 60 + +sec);
+}, 0);
+
+let hours = Math.floor(seconds / 3600);
+    seconds = seconds % 3600;
+let mins = Math.floor(seconds / 60);
+    seconds = seconds % 60;
+
+console.log(`Total time is: ${hours}:${mins}:${seconds}`);
 </script>
 </body>
 </html>
