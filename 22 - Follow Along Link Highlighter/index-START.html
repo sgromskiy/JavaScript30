@@ -26,7 +26,22 @@
     </div>
 
   <script>
-    // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
+    const links = document.querySelectorAll('a');
+    const highlight = document.createElement('div');
+    highlight.classList.add('highlight');
+    document.body.append(highlight);
+
+    function mouseHandler(e) {
+      let {left: x, top: y, height: h, width: w} = this.getBoundingClientRect();
+      x = x + window.pageXOffset;
+      y = y + window.pageYOffset;
+      highlight.style.height = h + 'px';
+      highlight.style.width = w + 'px';
+      highlight.style.top = y + 'px';
+      highlight.style.left = x + 'px';
+    }
+
+    links.forEach(e => e.addEventListener('mouseenter', mouseHandler));
   </script>
 </body>
 </html>
