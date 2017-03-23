@@ -206,8 +206,33 @@
   .button[href*=courses] { background: #ffc600; }
 
 </style>
-
 <script>
+const links = document.querySelectorAll('.cool > li');
+const layer = document.querySelector('.dropdownBackground');
+const nav = document.querySelector('.top');
+
+function enterHandler() {
+  this.classList.add('trigger-enter');
+  setTimeout(() => this.classList.contains('trigger-enter') && this.classList.add('trigger-enter-active'), 100)
+  layer.classList.add('open');
+
+  let {top: tn, left: ln } = nav.getBoundingClientRect();
+  let {width: w, height: h, top: t, left: l } = this.querySelector('.dropdown').getBoundingClientRect();
+
+  layer.style.width = `${w}px`;
+  layer.style.height = `${h}px`;
+  layer.style.transform = `translate(${l - ln}px, ${t - tn}px)`;
+}
+
+function leaveHandler() {
+  this.classList.remove('trigger-enter', 'trigger-enter-active');
+  layer.classList.remove('open');
+}
+
+
+links.forEach(link => link.addEventListener('mouseenter', enterHandler));
+links.forEach(link => link.addEventListener('mouseleave', leaveHandler));
+
 </script>
 
 </body>
